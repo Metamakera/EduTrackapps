@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduTrack - Vibrant Learning Hub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", "Roboto", Arial, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #e1f5fe 0%, #64b5f6 50%, #bbdefb 100%);
+            color: #1a237e;
+            line-height: 1.7;
+            overflow-x: hidden;
+            position: relative;
+        }
+        /* Particle Animation */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            z-index: -1;
+        }
+        /* Header Section */
+        .header {
+            background: linear-gradient(90deg, #0d47a1, #42a5f5);
+            padding: 40px 60px;
+            text-align: center;
+            color: #ffffff;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border-bottom: 3px solid #bbdefb;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+        .header img {
+            max-width: 200px;
+            margin-bottom: 20px;
+            transition: transform 0.5s ease, filter 0.5s ease;
+        }
+        .header img:hover {
+            transform: rotate(10deg) scale(1.15);
+            filter: brightness(1.2);
+        }
+        .header h1 {
+            font-size: 36px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        /* Navigation */
+        .nav {
+            background: linear-gradient(90deg, #1976d2, #2196f3);
+            padding: 20px;
+            text-align: center;
+            margin-top: 110px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+        .nav a {
+            color: #ffffff;
+            text-decoration: none;
+            margin: 0 30px;
+            font-size: 20px;
+            font-weight: 500;
+            transition: color 0.4s ease, transform 0.4s ease, text-shadow 0.4s ease;
+            position: relative;
+        }
+        .nav a:hover {
+            color: #90caf9;
+            transform: translateY(-3px);
+            text-shadow: 0 0 15px #90caf9;
+        }
+        .nav a::after {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: #bbdefb;
+            transition: width 0.3s ease;
+        }
+        .nav a:hover::after {
+            width: 100%;
+        }
+        /* Slideshow Container */
+        .slideshow-container {
+            max-width: 1000px;
+            margin: 150px auto 60px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+        }
+        .mySlides {
+            display: none;
+            padding: 60px;
+            text-align: center;
+            animation: slideZoom 1.5s ease-out;
+        }
+        @keyframes slideZoom {
+            from { opacity: 0; transform: scale(0.8) translateX(100%); }
+            to { opacity: 1; transform: scale(1) translateX(0); }
+        }
+        .mySlides h2 {
+            color: #0d47a1;
+            font-size: 30px;
+            margin-bottom: 30px;
+            font-weight: 600;
+            text-shadow: 1px 1px 8px rgba(13, 71, 161, 0.3);
+        }
+        .mySlides p {
+            font-size: 18px;
+            color: #283593;
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+        .dot {
+            height: 18px;
+            width: 18px;
+            background: radial-gradient(circle, #b0bec5 0%, #90caf9 100%);
+            border-radius: 50%;
+            display: inline-block;
+            margin: 0 10px;
+            cursor: pointer;
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+        }
+        .dot:hover, .dot.active {
+            transform: scale(1.3);
+            box-shadow: 0 0 10px #1976d2;
+            background: #1976d2;
+        }
+        /* Carousel Container */
+        .carousel-container {
+            max-width: 900px;
+            margin: 60px auto;
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+        }
+        .carousel-slide {
+            display: none;
+            padding: 40px;
+            text-align: center;
+            animation: carouselFade 1.2s ease;
+        }
+        @keyframes carouselFade {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .carousel-slide h3 {
+            color: #2196f3;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .carousel-slide p {
+            color: #455a64;
+            font-size: 16px;
+        }
+        .prev, .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #1e88e5;
+            color: #ffffff;
+            border: none;
+            padding: 15px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+        .prev:hover, .next:hover {
+            background: #42a5f5;
+            transform: translateY(-50%) scale(1.1);
+        }
+        .prev { left: 10px; }
+        .next { right: 10px; }
+        /* Card Section */
+        .card-container {
+            max-width: 1100px;
+            margin: 60px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            justify-content: center;
+        }
+        .card {
+            padding: 25px;
+            background: linear-gradient(135deg, #ffffff, #e3f2fd);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            perspective: 1000px;
+        }
+        .card:hover {
+            transform: rotateY(10deg) translateY(-10px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+        }
+        .card h3 {
+            color: #0d47a1;
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+        .card p {
+            color: #607d8b;
+            font-size: 15px;
+        }
+        /* Counter Section */
+        .counter-section {
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+        .counter {
+            display: inline-block;
+            margin: 0 30px;
+            font-size: 28px;
+            color: #1e88e5;
+            font-weight: 600;
+        }
+        /* Modal Section */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+        }
+        .modal-content {
+            background: linear-gradient(135deg, #ffffff, #bbdefb);
+            margin: 10% auto;
+            padding: 30px;
+            width: 70%;
+            max-width: 500px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            animation: modalOpen 0.5s ease;
+        }
+        @keyframes modalOpen {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .close {
+            color: #ff1744;
+            float: right;
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .close:hover {
+            color: #d50000;
+        }
+        /* Footer */
+        .footer {
+            background: linear-gradient(90deg, #0d47a1, #1976d2);
+            color: #ffffff;
+            text-align: center;
+            padding: 30px;
+            margin-top: 60px;
+            border-top: 3px solid #90caf9;
+        }
+        .footer a {
+            color: #bbdefb;
+            margin: 0 20px;
+            text-decoration: none;
+            transition: color 0.4s ease, text-shadow 0.4s ease;
+        }
+        .footer a:hover {
+            color: #e1f5fe;
+            text-shadow: 0 0 12px #e1f5fe;
+        }
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 28px;
+            }
+            .nav a {
+                margin: 0 15px;
+                font-size: 16px;
+            }
+            .slideshow-container, .carousel-container {
+                margin: 100px auto 30px;
+            }
+            .card {
+                width: 100%;
+            }
+            .modal-content {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Particle Background -->
+    <div id="particles-js"></div>
+
+    <!-- Header -->
+    <div class="header">
+        <img src="https://via.placeholder.com/200x80?text=EduTrack+Logo" alt="EduTrack Logo">
+        <h1>Welcome to EduTrack</h1>
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#teachers">Teachers</a>
+        <a href="#resources">Resources</a>
+        <a href="#events">Events</a>
+        <a href="#contact">Contact</a>
+    </div>
+
+    <!-- Slideshow -->
+    <div class="slideshow-container">
+        <div class="mySlides">
+            <h2>Launch into Learning Excellence!</h2>
+            <p>Step into a dynamic educational world with EduTrack, updated live on June 23, 2025, 06:24 PM IST!</p>
+        </div>
+        <div class="mySlides">
+            <h2>Ignite Your Teaching Spirit!</h2>
+            <p>Empower your classroom with innovative tools and a supportive community at EduTrack.</p>
+        </div>
+        <div class="mySlides">
+            <h2>Cultivate Future Leaders!</h2>
+            <p>Use EduTrack’s resources to inspire and guide students toward success, starting today!</p>
+        </div>
+        <div class="mySlides">
+            <h2>Connect with Global Educators!</h2>
+            <p>Join a network of passionate teachers, active as of June 23, 2025, 06:24 PM IST!</p>
+        </div>
+        <div class="mySlides">
+            <h2>Transform Education Now!</h2>
+            <p>Explore cutting-edge features designed to revolutionize your teaching methods.</p>
+        </div>
+        <div class="mySlides">
+            <h2>Build a Legacy of Learning!</h2>
+            <p>Create lasting impacts with EduTrack’s comprehensive tools, launched in 2025!</p>
+        </div>
+        <div class="mySlides">
+            <h2>Elevate Your Classroom!</h2>
+            <p>Enhance engagement with interactive lessons, updated live at 06:24 PM IST!</p>
+        </div>
+    </div>
+    <div style="text-align:center">
+        <span class="dot" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+        <span class="dot" onclick="currentSlide(3)"></span>
+        <span class="dot" onclick="currentSlide(4)"></span>
+        <span class="dot" onclick="currentSlide(5)"></span>
+        <span class="dot" onclick="currentSlide(6)"></span>
+        <span class="dot" onclick="currentSlide(7)"></span>
+    </div>
+
+    <!-- Carousel -->
+    <div class="carousel-container" id="about">
+        <div class="carousel-slide">
+            <h3>About EduTrack</h3>
+            <p>Launched on June 23, 2025, EduTrack is your partner in modern education.</p>
+        </div>
+        <div class="carousel-slide">
+            <h3>Our Vision</h3>
+            <p>To empower 50,000 educators by 2026 with innovative tools.</p>
+        </div>
+        <div class="carousel-slide">
+            <h3>Our Mission</h3>
+            <p>Delivering excellence in teaching, updated at 06:24 PM IST!</p>
+        </div>
+        <button class="prev" onclick="plusCarousel(-1)">&#10094;</button>
+        <button class="next" onclick="plusCarousel(1)">&#10095;</button>
+    </div>
+
+    <!-- Card Section -->
+    <div class="card-container" id="teachers">
+        <div class="card">
+            <h3>John Doe</h3>
+            <p>Math Wizard, Class 10A, loves solving complex equations.</p>
+        </div>
+        <div class="card">
+            <h3>Jane Smith</h3>
+            <p>Science Guru, Class 9B, expert in lab experiments.</p>
+        </div>
+        <div class="card">
+            <h3>Mike Johnson</h3>
+            <p>English Poet, Class 11C, passionate about literature.</p>
+        </div>
+        <div class="card">
+            <h3>Sarah Lee</h3>
+            <p>History Sage, Class 12D, master of ancient tales.</p>
+        </div>
+        <div class="card">
+            <h3>Emily Brown</h3>
+            <p>Art Mentor, Class 8E, inspires creative masterpieces.</p>
+        </div>
+        <div class="card">
+            <h3>David Wilson</h3>
+            <p>PE Coach, Class 7F, promotes fitness and teamwork.</p>
+        </div>
+    </div>
+
+    <!-- Counter Section -->
+    <div class="counter-section" id="resources">
+        <h2>Our Achievements</h2>
+        <div class="counter" id="teacherCount">0</div>
+        <div class="counter" id="resourceCount">0</div>
+        <div class="counter" id="studentCount">0</div>
+        <p>Stats updated live on June 23, 2025, 06:24 PM IST!</p>
+    </div>
+
+    <!-- Modal Trigger -->
+    <div class="content-section" id="events">
+        <h2>Upcoming Events</h2>
+        <p>Click below to view our event calendar:</p>
+        <button onclick="openModal()" style="...button styles...">View Events</button>
+    </div>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Event Calendar</h2>
+            <p><strong>June 25, 2025:</strong> Teacher Training Workshop</p>
+            <p><strong>June 30, 2025:</strong> Student Showcase</p>
+            <p><strong>July 5, 2025:</strong> Parent-Teacher Meet</p>
+        </div>
+    </div>
+
+    <div class="content-section" id="contact">
+        <h2>Contact Support</h2>
+        <p>Reach out 24/7 for assistance:</p>
+        <ul>
+            <li><strong>Email:</strong> support@edutrack.example.com</li>
+            <li><strong>Phone:</strong> +1-800-EDUTRACK</li>
+            <li><strong>Chat:</strong> Live at 06:24 PM IST!</li>
+            <li><strong>Address:</strong> 123 Learning Lane, EduCity</li>
+        </ul>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>© 2025 EduTrack. All rights reserved. Last Updated: June 23, 2025, 06:24 PM IST</p>
+        <p>
+            <a href="#about">About</a> |
+            <a href="#teachers">Teachers</a> |
+            <a href="#resources">Resources</a> |
+            <a href="#events">Events</a> |
+            <a href="#contact">Contact</a>
+        </p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Particles.js Initialization
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: "#90caf9" },
+                shape: { type: "circle" },
+                opacity: { value: 0.5, random: true },
+                size: { value: 3, random: true },
+                line_linked: { enable: true, color: "#bbdefb" },
+                move: { enable: true, speed: 2 }
+            },
+            interactivity: {
+                events: { onhover: { enable: true, mode: "repulse" } }
+            }
+        });
+
+        // Slideshow
+        let slideIndex = 1;
+        showSlides(slideIndex);
+        setInterval(() => plusSlides(1), 6000);
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("mySlides");
+            let dots = document.getElementsByClassName("dot");
+            if (n > slides.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = slides.length }
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].className += " active";
+        }
+
+        // Carousel
+        let carouselIndex = 1;
+        showCarousel(carouselIndex);
+
+        function plusCarousel(n) {
+            showCarousel(carouselIndex += n);
+        }
+
+        function showCarousel(n) {
+            let i;
+            let slides = document.getElementsByClassName("carousel-slide");
+            if (n > slides.length) { carouselIndex = 1 }
+            if (n < 1) { carouselIndex = slides.length }
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slides[carouselIndex - 1].style.display = "block";
+        }
+
+        // Counter Animation
+        function animateCounter(id, target) {
+            let count = 0;
+            const element = document.getElementById(id);
+            const duration = 2000;
+            const increment = target / (duration / 16);
+            const start = Date.now();
+            function update() {
+                const now = Date.now();
+                const progress = now - start;
+                count = Math.min(count + increment, target);
+                element.textContent = Math.floor(count);
+                if (progress < duration) {
+                    requestAnimationFrame(update);
+                }
+            }
+            requestAnimationFrame(update);
+        }
+        animateCounter("teacherCount", 5000);
+        animateCounter("resourceCount", 10000);
+        animateCounter("studentCount", 25000);
+
+        // Modal
+        function openModal() {
+            document.getElementById("myModal").style.display = "block";
+        }
+        function closeModal() {
+            document.getElementById("myModal").style.display = "none";
+        }
+        window.onclick = function(event) {
+            if (event.target == document.getElementById("myModal")) {
+                closeModal();
+            }
+        };
+    </script>
+</body>
+</html>
